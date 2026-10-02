@@ -5,6 +5,7 @@
 !/Dockerfile
 !/docker-compose.yml
 !/docker-compose.db.yml
+!/docker-compose.client.yml
 !/README.md
 !/custom-addons/
 

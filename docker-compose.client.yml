@@ -1,0 +1,26 @@
+# One Odoo instance per client, all sharing the single Postgres server from docker-compose.db.yml.
+# Usage: docker compose -p ${CLIENT} --env-file clients/${CLIENT}.env -f docker-compose.client.yml up -d
+services:
+  odoo:
+    build: .
+    image: odoo-dev:latest
+    environment:
+      HOST: odoo-db
+      USER: ${CLIENT}
+      PASSWORD: ${DB_PASSWORD}
+    command: ["odoo", "-d", "${CLIENT}", "--db-filter=^${CLIENT}$$", "--no-database-list", "--db_maxconn=16"]
+    ports:
+      - "${PORT}:8069"
+    volumes:
+      - odoo-data:/var/lib/odoo
+      - ${ADDONS_DIR:-./custom-addons}:/mnt/extra-addons
+    networks:
+      - odoo-network
+    restart: unless-stopped
+
+volumes:
+  odoo-data:
+
+networks:
+  odoo-network:
+    external: true
