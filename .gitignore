@@ -1,0 +1,12 @@
+# Track only the project's own files; Odoo core comes from the official docker image
+/*
+!/.gitignore
+!/.dockerignore
+!/Dockerfile
+!/docker-compose.yml
+!/docker-compose.db.yml
+!/README.md
+!/custom-addons/
+
+__pycache__/
+*.py[co]
